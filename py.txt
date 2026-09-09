@@ -1,0 +1,15 @@
+htpp://127.0.0.1:5000/user/register
+
+{
+    "username": "testuser",
+    "password": "senha123"
+}
+
+---------------------------------
+
+htpp://127.0.0.1:5000/user/login
+
+{
+    "username": "testuser",
+    "password": "senha123"
+}
