@@ -1,23 +1,12 @@
-import _sqlite3
+from flask import Blueprint, request, jsonify
+from controllers.user_controller import UserController
 
-from database.db import get_db_connection
+user_bp = Blueprint('users', __name__)
 
-class UserModel:
-    @staticmethod
-    def find_by_username(username):
-        conn = get_db_connection()
-        user = conn.execute('SELECT * FROM users WHERE username = ?', (username)).fetchone()
-        conn.close 
-        return user 
-    
-    @staticmethod
-    def create_user(username, password):
-        conn = get_db_connection()
-        try:
-            conn.execute('INSERT INTO users (username, password) VALUES (?,?)', (username,password))
-            conn.commit()
-            return True
-        except _sqlite3.InterfaceError:
-            return None
-        finally:
-            conn.close 
+@user_bp.route('/register', methods=['POST'])
+def register():
+    return jsonify(UserController.register_user(request.get_json()))
+
+@user_bp.route('/login', methods=['POST'])
+def login():
+    return jsonify(UserController.login_user(request.get_json()))
